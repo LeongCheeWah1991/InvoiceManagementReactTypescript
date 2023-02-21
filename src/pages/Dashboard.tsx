@@ -1,6 +1,9 @@
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useEffect, useState } from "react";
-import { getInvoices } from "../api/InvoiceAPI";
+import { getInvoices, uploadInvoices } from "../api/InvoiceAPI";
+import FileUploader from '../components/file-upload';
 
 export default function DashboardPage() {
     const [rows, setRows] = useState([] as any[]);
@@ -70,12 +73,32 @@ export default function DashboardPage() {
         }
     }
 
+    const handleAfterUploadInvoice = (response: any) => {
+        console.log('handleAfterUploadInvoice response', response);
+        if (response) {
+            populateInvoiceData();
+        }
+    }
+
+    const handleFile = (response: any) => {
+        if (response) {
+            uploadInvoices(handleAfterUploadInvoice,
+                {
+                    file: response
+                });
+        }
+    }
+
     useEffect(() => {
         populateInvoiceData();
     }, []);
 
     return (
         <>
+            <Typography variant="h3">Invoice Management</Typography>
+            <Container className='upload-container'>
+                <FileUploader handleFile={handleFile} />
+            </Container>
             <DataGrid
                 columns={columns}
                 rows={rows}
