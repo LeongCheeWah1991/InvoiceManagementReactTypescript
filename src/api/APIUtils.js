@@ -11,14 +11,12 @@ export const getRequest = (path, next, param) => {
 	axios
 		.get(host + path, requestOptions)
 		.then((response) => {
-			console.log('get response', response);
 			next({
 				error: false,
 				data: response.data,
 			});
 		})
 		.catch((err) => {
-			console.log('Error for GET Request - ' + path);
 			next({
 				error: true,
 			});
@@ -26,7 +24,6 @@ export const getRequest = (path, next, param) => {
 };
 
 export const uploadRequest = (path, next, body) => {
-	console.log('body', body)
 
 	const headers = {
 		'Content-Type': 'application/json',

@@ -63,22 +63,18 @@ export default function DashboardPage() {
 
     const populateInvoiceData = () => {
         setIsLoading(true);
-        console.log('start populateInvoiceData');
         getInvoices(handleAfterGetInvoices,
             {});
     }
 
     const handleAfterGetInvoices = (response: any) => {
-        console.log('handleAfterGetInvoices response', response);
         if (response) {
-            console.log('response', response);
             setRows(response.data)
             setIsLoading(false);
         }
     }
 
     const handleAfterUploadInvoice = (response: any) => {
-        console.log('handleAfterUploadInvoice response', response);
         if (response) {
             populateInvoiceData();
         }
