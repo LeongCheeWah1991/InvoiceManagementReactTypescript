@@ -28,6 +28,11 @@
   color: #61dafb;
 }
 
+.upload-container {
+  text-align: left;
+  margin-left: 0px !important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

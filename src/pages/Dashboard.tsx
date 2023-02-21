@@ -4,9 +4,11 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useEffect, useState } from "react";
 import { getInvoices, uploadInvoices } from "../api/InvoiceAPI";
 import FileUploader from '../components/file-upload';
+import SpinnerLoader from '../components/spinner-loader';
 
 export default function DashboardPage() {
     const [rows, setRows] = useState([] as any[]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const columns = [
         {
@@ -60,6 +62,7 @@ export default function DashboardPage() {
     ];
 
     const populateInvoiceData = () => {
+        setIsLoading(true);
         console.log('start populateInvoiceData');
         getInvoices(handleAfterGetInvoices,
             {});
@@ -70,6 +73,7 @@ export default function DashboardPage() {
         if (response) {
             console.log('response', response);
             setRows(response.data)
+            setIsLoading(false);
         }
     }
 
@@ -82,6 +86,8 @@ export default function DashboardPage() {
 
     const handleFile = (response: any) => {
         if (response) {
+            setIsLoading(true);
+
             uploadInvoices(handleAfterUploadInvoice,
                 {
                     file: response
@@ -95,6 +101,7 @@ export default function DashboardPage() {
 
     return (
         <>
+            <SpinnerLoader open={isLoading} />
             <Typography variant="h3">Invoice Management</Typography>
             <Container className='upload-container'>
                 <FileUploader handleFile={handleFile} />
