@@ -69,7 +69,9 @@ export default function DashboardPage() {
 
     const handleAfterGetInvoices = (response: any) => {
         if (response) {
-            setRows(response.data)
+            if (!response.error) {
+                setRows(response.data)
+            }
             setIsLoading(false);
         }
     }
